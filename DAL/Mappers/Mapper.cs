@@ -25,5 +25,21 @@ namespace DAL.Mappers
 				DisabledAt = (record[nameof(User.DisabledAt)] is DBNull) ? null : (DateTime?)record[nameof(User.DisabledAt)],
 			};
 		}
+
+		public static Cocktail ToCocktail(this IDataRecord record)
+		{
+			if (record is null) throw new ArgumentNullException(nameof(record)); //Or if(record is null) return null;
+
+			return new Cocktail()
+			{
+				Cocktail_Id = (Guid)record[nameof(Cocktail.Cocktail_Id)],
+				Name = (string)record[nameof(Cocktail.Name)],
+				Instructions = (string)record[nameof(Cocktail.Instructions)],
+				Description = (record[nameof(Cocktail.Description)] is DBNull) ? null : (string?) record[nameof(Cocktail.Description)],
+				CreatedAt = (DateTime)record[nameof(Cocktail.CreatedAt)],
+				CreatedBy = (record[nameof(Cocktail.CreatedBy)] is null) ? null : (Guid?)record[nameof(Cocktail.CreatedBy)]
+			};
+		}
+
 	}
 }

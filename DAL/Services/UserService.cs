@@ -84,7 +84,7 @@ namespace DAL.Services
 					command.Parameters.AddWithValue(nameof(User.Password), user.Password);
 
 					connection.Open();
-					return (Guid)command.ExecuteScalar(); ;
+					return (Guid)command.ExecuteScalar(); 
 				}
 			}	
 		}
@@ -120,7 +120,7 @@ namespace DAL.Services
 					command.CommandType= CommandType.StoredProcedure;
 					command.Parameters.AddWithValue(nameof(user_id),user_id);
 					connection.Open();
-					command.BeginExecuteNonQuery();
+					command.ExecuteNonQuery();
 				}
 			}
 		}
