@@ -12,7 +12,7 @@ namespace BLL.Mappers
 {
 	internal static class Mapper
 	{
-		//We will convert the DAL object to BLL object
+		// USER: We will convert the DAL object to BLL object
 		public static BLL.Entities.User ToBLL(this DAL.Entities.User user)
 		{
 			if(user == null) throw new ArgumentNullException(nameof(user));
@@ -26,7 +26,7 @@ namespace BLL.Mappers
 					user.DisabledAt);
 		}
 
-		//Function to convert object BLL yo Dal Object
+		//USER: Function to convert object BLL to DAL Object
 		public static DAL.Entities.User ToDAL(this BLL.Entities.User user)
 		{
 			if (user == null) throw new ArgumentNullException(nameof(user));
@@ -41,6 +41,38 @@ namespace BLL.Mappers
 				CreatedAt = user.CreatedAt,
 				// Disabled at is private we cannot change it, so we use the bool IsDisabled
 				DisabledAt = (user.IsDisabled) ? null: new DateTime()
+			};
+		}
+
+
+		//COCKTAIL: From DAL data to Bll data
+		public static BLL.Entities.Cocktail ToBLL(this DAL.Entities.Cocktail cocktail)
+		{
+			if (cocktail == null) throw new ArgumentNullException(nameof(cocktail));
+			// we use constructor
+			return new BLL.Entities.Cocktail(
+				cocktail.Cocktail_Id,
+				cocktail.Name,
+				cocktail.Instructions,
+				(DateTime)cocktail.CreatedAt,
+				(cocktail.Description is null) ? null : cocktail.Description,
+				(cocktail.CreatedBy is null) ? null : (Guid)cocktail.CreatedBy
+			);
+		}
+
+		//COCKTAIL: From BLL data to DAL data
+		public static DAL.Entities.Cocktail ToDAL(this BLL.Entities.Cocktail cocktail)
+		{
+			if (cocktail == null) throw new ArgumentNullException(nameof(cocktail));
+			//we don't have constructor so we assign to properties
+			return new DAL.Entities.Cocktail()
+			{
+				Cocktail_Id = cocktail.Cocktail_Id,
+				Name = cocktail.Name,
+				Instructions = cocktail.Instructions,
+				Description = cocktail.Description,
+				CreatedAt = cocktail.CreatedAt,
+				CreatedBy = cocktail.CreatedBy,
 			};
 		}
 	}
