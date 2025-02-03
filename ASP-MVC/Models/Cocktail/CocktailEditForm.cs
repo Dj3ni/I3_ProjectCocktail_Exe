@@ -5,6 +5,9 @@ namespace ASP_MVC.Models.Cocktail
 {
 	public class CocktailEditForm
 	{
+		[ScaffoldColumn(false)]
+		public Guid CocktailId { get; set; }
+
 		[Required(ErrorMessage = "The field Name is compulsory")]
 		[DisplayName("Title: ")]
 		[MaxLength(64, ErrorMessage = "Name field has a max size of 64 characters")]

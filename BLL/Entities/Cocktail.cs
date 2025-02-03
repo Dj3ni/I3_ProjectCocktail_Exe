@@ -25,8 +25,9 @@ namespace BLL.Entities
 			CreatedBy = createdBy;
 		}
 
-		public Cocktail(string name, string instructions, string? description = null)
+		public Cocktail(Guid cocktail_Id, string name, string instructions, string? description = null)
 		{
+			Cocktail_Id = cocktail_Id;
 			Name = name;
 			Description = description;
 			Instructions = instructions;

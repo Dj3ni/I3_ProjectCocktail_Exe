@@ -22,8 +22,9 @@ namespace ASP_MVC
 				builder.Services.AddScoped<IUserRepository<BLL.Entities.User>,BLL.Services.UserService>();
 				builder.Services.AddScoped<IUserRepository<DAL.Entities.User>, DAL.Services.UserService>();
 				//Cocktails
-				builder.Services.AddScoped<ICocktailRepository<BLL.Entities.Cocktail>, BLL.Services.CocktailService>();
-				builder.Services.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>();
+				
+			builder.Services.AddScoped<ICocktailRepository<BLL.Entities.Cocktail>, BLL.Services.CocktailService>();
+			builder.Services.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>();
 
 
 			var app = builder.Build();

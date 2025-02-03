@@ -2,7 +2,6 @@
 using BLL.Entities;
 using Common.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace ASP_MVC.Controllers
 {
@@ -37,7 +36,7 @@ namespace ASP_MVC.Controllers
 				//Here we define session variable
 				return RedirectToAction("Details","User", new {id});
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return View();
 			}

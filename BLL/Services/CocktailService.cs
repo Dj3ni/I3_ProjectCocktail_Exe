@@ -13,7 +13,7 @@ namespace BLL.Services
 {
 	public class CocktailService : ICocktailRepository<Cocktail>
 	{
-		//Constructeur
+		//Constructeur ( pour réutiliser un service si déjà créé)
 		private ICocktailRepository<DAL.Entities.Cocktail> _service;
 		public CocktailService(ICocktailRepository<DAL.Entities.Cocktail> service)
 		{

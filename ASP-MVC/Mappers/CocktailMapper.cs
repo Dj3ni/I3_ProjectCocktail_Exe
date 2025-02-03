@@ -13,6 +13,7 @@ namespace ASP_MVC.Mappers
 
 			return new CocktailListItem()
 			{
+				Cocktail_Id = cocktail.Cocktail_Id,
 				Cocktail_Name = cocktail.Name,
 				Cocktail_Description = (cocktail.Description is null) ? null : cocktail.Description
 			};
@@ -44,7 +45,7 @@ namespace ASP_MVC.Mappers
 				form.Cocktail_Instructions,
 				DateTime.Now,
 				form.Cocktail_Description,
-				null				
+				(form.Cocktail_Author is null)? null: form.Cocktail_Author				
 				);			
 		}
 
@@ -55,6 +56,7 @@ namespace ASP_MVC.Mappers
 			if (cocktail == null) throw new ArgumentNullException(nameof(cocktail));
 			return new CocktailEditForm()
 			{
+				//Cocktail_Id = cocktail.Cocktail_Id,
 				Cocktail_Name = cocktail.Name,
 				Cocktail_Description = cocktail.Description,
 				Cocktail_Instructions = cocktail.Instructions,
@@ -66,6 +68,7 @@ namespace ASP_MVC.Mappers
 		{
 			if (form == null) throw new ArgumentNullException(nameof(form));
 			return new Cocktail(
+				form.CocktailId,
 				form.Cocktail_Name,
 				form.Cocktail_Instructions,
 				form.Cocktail_Description

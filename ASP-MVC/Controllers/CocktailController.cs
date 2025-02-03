@@ -22,7 +22,8 @@ namespace ASP_MVC.Controllers
 		{
 			try
 			{
-				IEnumerable<Cocktail> model = (IEnumerable<Cocktail>)_cocktailService.GetAll().Select(bll => bll.ToListItem());
+				//attention qu'on a besoin d'un listItem et non d'un cocktail!
+				IEnumerable<CocktailListItem> model = _cocktailService.GetAll().Select(bll => bll.ToListItem());
 				return View(model);
 			}
 			catch (Exception)

@@ -2,6 +2,7 @@
 using DAL.Entities;
 using DAL.Mappers;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,13 +12,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Services
 {
-	public class CocktailService : ICocktailRepository<Cocktail>
+	public class CocktailService : BaseService, ICocktailRepository<Cocktail>
 	{
-		private const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WAD24-DemoASP-DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+		//private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WAD24-DemoASP-DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+
+		// Quand on fait un injection de dépendance dans la mère, on doit le faire également dans la fille!
+		public CocktailService(IConfiguration configuration) : base(configuration, "Main-DB") { }
 
 		public IEnumerable<Cocktail> GetAll()
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -37,7 +41,7 @@ namespace DAL.Services
 
 		public IEnumerable<Cocktail> GetByUser(Guid userId)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -59,7 +63,7 @@ namespace DAL.Services
 
 		public Cocktail GetCocktail(Guid cocktailId)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -85,16 +89,16 @@ namespace DAL.Services
 
 		public Guid Insert(Cocktail cocktail)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = "SP_Cocktail_Inser";
+					command.CommandText = "SP_Cocktail_Insert";
 					command.CommandType= CommandType.StoredProcedure;
 					command.Parameters.AddWithValue(nameof(Cocktail.Name), cocktail.Name);
 					command.Parameters.AddWithValue(nameof(Cocktail.Instructions), cocktail.Instructions);
 					command.Parameters.AddWithValue(nameof(Cocktail.Description), cocktail.Description);
-					command.Parameters.AddWithValue(nameof(Cocktail.CreatedBy),cocktail.CreatedBy);
+					command.Parameters.AddWithValue("user_id",cocktail.CreatedBy); // We have to use the same name than in the StockedProcedure
 					connection.Open();
 					return (Guid)command.ExecuteScalar();
 				}
@@ -103,13 +107,13 @@ namespace DAL.Services
 
 		public void Update(Guid id, Cocktail cocktail)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
 					command.CommandText = "SP_Cocktail_Update";
 					command.CommandType = CommandType.StoredProcedure;
-					command.Parameters.AddWithValue(nameof(id), id);
+					command.Parameters.AddWithValue("cocktail_id", id);
 					command.Parameters.AddWithValue(nameof(cocktail.Name), cocktail.Name);
 					command.Parameters.AddWithValue(nameof(cocktail.Description), cocktail.Description);
 					command.Parameters.AddWithValue(nameof(cocktail.Instructions),cocktail.Instructions);
@@ -120,7 +124,7 @@ namespace DAL.Services
 		}
 		public void Delete(Guid id)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{

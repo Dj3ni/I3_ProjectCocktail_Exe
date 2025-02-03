@@ -2,6 +2,7 @@
 using DAL.Entities;
 using DAL.Mappers;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,15 +12,17 @@ using System.Threading.Tasks;
 
 namespace DAL.Services
 {
-	public class UserService : IUserRepository<User>
+	public class UserService : BaseService, IUserRepository<User>
 	{
-		private const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WAD24-DemoASP-DB;Integrated Security=True;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+		// Injection dépendance pour utiliser connection string
+		public UserService(IConfiguration configuration) : base(configuration, "Main-DB") { }
+
 
 		//Searching the user in the list
 		public IEnumerable<User> GetAll()
 		{
 			//Connection to DB
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				//Command
 				using (SqlCommand command = connection.CreateCommand())
@@ -44,7 +47,7 @@ namespace DAL.Services
 		//Searching the User By the Id
 		public User Get(Guid user_id)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -71,7 +74,7 @@ namespace DAL.Services
 		//Insert in DB
 		public Guid Insert(User user) 
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -92,7 +95,7 @@ namespace DAL.Services
 		//Update
 		public void Update(Guid user_id, User user)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
@@ -112,7 +115,7 @@ namespace DAL.Services
 		//Delete
 		public void Delete(Guid user_id)
 		{ 
-			using(SqlConnection connection = new SqlConnection(ConnectionString))
+			using(SqlConnection connection = new SqlConnection(_connectionString))
 			{
 				using(SqlCommand command = connection.CreateCommand())
 				{
@@ -128,7 +131,7 @@ namespace DAL.Services
 		//Check Password
 		public Guid CheckPassword(string email, string password)
 		{
-			using(SqlConnection conn = new SqlConnection(ConnectionString))
+			using(SqlConnection conn = new SqlConnection(_connectionString))
 			{
 				using(SqlCommand cmd = conn.CreateCommand())
 				{
