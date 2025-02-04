@@ -1,0 +1,8 @@
+﻿@{
+	int count = ViewContext.HttpContext.Session.GetInt32("CountVisitedPage") ?? 0;
+}
+
+<h4>Sans HttpContextAccessor</h4>
+<p>Nombre de pages visitées: @count</p>
+
+<h4>Avec HttpContextAccessor</h4>

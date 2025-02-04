@@ -53,7 +53,7 @@ namespace ASP_MVC.Controllers
 			try
 			{
 				//We use the mapper method to convert BLL object to ASP object
-				UserDetails model = _userService.Get(id).ToDetails();
+				UserDetails model = _userService.GetById(id).ToDetails();
 				return View(model);
 			}
 			catch (Exception)
@@ -93,7 +93,7 @@ namespace ASP_MVC.Controllers
 		{
 			try
 			{
-				UserEditForm model = _userService.Get(id).ToEditForm();//We need to use a mapper function to convert
+				UserEditForm model = _userService.GetById(id).ToEditForm();//We need to use a mapper function to convert
 				return View(model);
 			}
 			catch (Exception)
@@ -125,7 +125,7 @@ namespace ASP_MVC.Controllers
 		{
 			try
 			{
-				UserDelete model = _userService.Get(id).ToDeleteForm();
+				UserDelete model = _userService.GetById(id).ToDeleteForm();
 				return View(model);
 			}
 			catch (Exception)

@@ -1,3 +1,4 @@
+using ASP_MVC.Handlers;
 using Common.Repositories;
 
 namespace ASP_MVC
@@ -11,6 +12,30 @@ namespace ASP_MVC
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
 
+			// Add Session services 
+			builder.Services.AddDistributedMemoryCache();
+			builder.Services.AddSession(
+				options =>
+				{
+					options.Cookie.Name = "CookieWad24";
+					options.Cookie.HttpOnly = true;
+					options.Cookie.IsEssential = true;
+					options.IdleTimeout = TimeSpan.FromMinutes(10);
+				}
+			);
+			builder.Services.Configure<CookiePolicyOptions>(
+				options =>
+				{
+					options.CheckConsentNeeded = context => true;
+					options.MinimumSameSitePolicy = SameSiteMode.None; // même règle de police pour tous les cookies
+					options.Secure = CookieSecurePolicy.Always;
+				}
+			);
+
+			// Add HttpContext service
+			builder.Services.AddHttpContextAccessor();
+
+
 			/*Personalized Services if no repository pattern 
 				//BLL
 			builder.Services.AddScoped<BLL.Services.UserService>();
@@ -21,10 +46,12 @@ namespace ASP_MVC
 				//User
 				builder.Services.AddScoped<IUserRepository<BLL.Entities.User>,BLL.Services.UserService>();
 				builder.Services.AddScoped<IUserRepository<DAL.Entities.User>, DAL.Services.UserService>();
-				//Cocktails
-				
+				//Cocktails				
 			builder.Services.AddScoped<ICocktailRepository<BLL.Entities.Cocktail>, BLL.Services.CocktailService>();
 			builder.Services.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>();
+
+			//Service SessionManager
+			builder.Services.AddScoped<SessionManager>();
 
 
 			var app = builder.Build();
@@ -34,6 +61,9 @@ namespace ASP_MVC
 			{
 				app.UseExceptionHandler("/Home/Error");
 			}
+			app.UseSession();
+			app.UseCookiePolicy();
+
 			app.UseStaticFiles();
 
 			app.UseRouting();

@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP-MVC", "ASP-MVC\ASP-MVC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{4EF6B6FE-1EE3-4967-8807-A5951737FA56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeDB", "FakeDB\FakeDB.csproj", "{71DA1ECF-94A3-428E-A4EE-8919B31566A4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +47,6 @@ Global
 		{4EF6B6FE-1EE3-4967-8807-A5951737FA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EF6B6FE-1EE3-4967-8807-A5951737FA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EF6B6FE-1EE3-4967-8807-A5951737FA56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71DA1ECF-94A3-428E-A4EE-8919B31566A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71DA1ECF-94A3-428E-A4EE-8919B31566A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71DA1ECF-94A3-428E-A4EE-8919B31566A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71DA1ECF-94A3-428E-A4EE-8919B31566A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

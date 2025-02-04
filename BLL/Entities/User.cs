@@ -18,6 +18,9 @@ namespace BLL.Entities
 		private DateTime? _disabledAt;
 		//public DateTime? DisabledAt { get { return _disabledAt; }}
 
+		//Relation One To Many avec Cocktail
+		public IEnumerable<Cocktail> Cocktails { get; set; }
+
 		public bool IsDisabled
 		{
 			get { return _disabledAt is not null; }

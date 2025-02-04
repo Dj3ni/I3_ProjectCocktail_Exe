@@ -39,7 +39,7 @@ namespace ASP_MVC.Controllers
 			try
 			{
 				// On envoie le modèle de vue!
-				CocktailDetails model = _cocktailService.GetCocktail(id).ToDetails();
+				CocktailDetails model = _cocktailService.GetById(id).ToDetails();
 				return View(model);
 			}
 			catch (Exception)
@@ -76,7 +76,7 @@ namespace ASP_MVC.Controllers
 		// GET: CocktailController/Edit/5
 		public ActionResult Edit(Guid id)
 		{
-			CocktailEditForm model = _cocktailService.GetCocktail(id).EditForm();
+			CocktailEditForm model = _cocktailService.GetById(id).EditForm();
 			return View(model);
 		}
 
@@ -102,7 +102,7 @@ namespace ASP_MVC.Controllers
 		{
 			try
 			{
-				CocktailDelete model = _cocktailService.GetCocktail(id).DeleteForm();
+				CocktailDelete model = _cocktailService.GetById(id).DeleteForm();
 				return View(model);
 			}
 			catch

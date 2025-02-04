@@ -31,7 +31,8 @@ namespace ASP_MVC.Mappers
 				Cocktail_Description = (cocktail.Description is null) ? null : cocktail.Description,
 				Cocktail_Instructions = cocktail.Instructions,
 				Cocktail_Id = cocktail.Cocktail_Id,
-				CreatedAt = DateOnly.FromDateTime(cocktail.CreatedAt)
+				CreatedAt = DateOnly.FromDateTime(cocktail.CreatedAt),
+				Creator = (cocktail.Creator is null) ? null : $"{cocktail.Creator.First_Name} {cocktail.Creator.Last_Name}"
 			};
 		}
 

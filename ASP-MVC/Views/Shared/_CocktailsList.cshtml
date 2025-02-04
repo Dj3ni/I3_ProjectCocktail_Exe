@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ASP_MVC.Models.Cocktail.CocktailListItem>
+
+<p>
+	<a asp-action="Create" asp-controller="Cocktail">Create New Cocktail</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cocktail_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cocktail_Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cocktail_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cocktail_Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit","Cocktail", new { id=item.Cocktail_Id }) |
+				@Html.ActionLink("Details", "Details", "Cocktail", new { id = item.Cocktail_Id }) |
+				@Html.ActionLink("Delete", "Delete", "Cocktail", new { id = item.Cocktail_Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

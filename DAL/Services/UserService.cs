@@ -45,7 +45,7 @@ namespace DAL.Services
 		}
 
 		//Searching the User By the Id
-		public User Get(Guid user_id)
+		public User GetById(Guid user_id)
 		{
 			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{

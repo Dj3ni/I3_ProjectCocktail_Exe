@@ -61,7 +61,7 @@ namespace DAL.Services
 
 		}
 
-		public Cocktail GetCocktail(Guid cocktailId)
+		public Cocktail GetById(Guid cocktailId)
 		{
 			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{

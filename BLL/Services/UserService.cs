@@ -24,10 +24,14 @@ namespace BLL.Services
 		{
 			_service = userService;
 		}*/        /* If we used the repository pattern, we can use the Interface!*/
-		private IUserRepository<DAL.Entities.User> _service;
-		public UserService(IUserRepository<DAL.Entities.User> userService)
+		private IUserRepository<DAL.Entities.User> _userService;
+		private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
+		public UserService(
+				IUserRepository<DAL.Entities.User> userService,
+				ICocktailRepository<DAL.Entities.Cocktail> cocktailService)
 		   {
-			   _service = userService;
+				_userService = userService;
+				_cocktailService = cocktailService;
 		   }
 
 		// 1. Crud
@@ -35,33 +39,38 @@ namespace BLL.Services
 		public IEnumerable<User> GetAll()
 		{
 			// We need to convert Dal User to Bll User
-			return _service.GetAll().Select(dal => dal.ToBLL());
+			return _userService.GetAll().Select(dal => dal.ToBLL());
 		}
 
-		public User Get(Guid id)
+		public User GetById(Guid id)
 		{
-			return _service.Get(id).ToBLL();//we don't need select because we are not in a collection
+			//return _userService.GetById(id).ToBLL();//we don't need select because we are not in a collection
+			User user = _userService.GetById(id).ToBLL(); // We get the user
+			user.Cocktails = _cocktailService.GetByUser(id).Select(dal =>dal.ToBLL()); // We get all the cocktails associated with him
+
+			return user;
+
 		}
 
 		public void Delete(Guid id)
 		{
-			_service.Delete(id);
+			_userService.Delete(id);
 		}
 
 		public Guid Insert(User user)
 		{
 			// we need a return to get the Id
-			return _service.Insert(user.ToDAL());
+			return _userService.Insert(user.ToDAL());
 		}
 		public void Update(Guid id, User user)
 		{
-			_service.Update(id,user.ToDAL());
+			_userService.Update(id,user.ToDAL());
 		}
 
 		// 2. Connection (check Password)
 		public Guid CheckPassword(string email, string password)
 		{
-			return _service.CheckPassword(email, password);
+			return _userService.CheckPassword(email, password);
 		}
 	}
 }

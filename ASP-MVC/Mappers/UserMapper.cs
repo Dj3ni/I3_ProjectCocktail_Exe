@@ -2,7 +2,7 @@
 
 namespace ASP_MVC.Mappers
 {
-	internal static class Mapper
+	internal static class UserMapper
 	{
 		public static UserListItem ToListItem(this BLL.Entities.User user)
 		{
@@ -25,6 +25,7 @@ namespace ASP_MVC.Mappers
 				Last_Name = user.Last_Name,
 				Email = user.Email,
 				CreatedAt = DateOnly.FromDateTime(user.CreatedAt),
+				Cocktails = user.Cocktails.Select(bll=>bll.ToListItem()),
 			};
 		}
 

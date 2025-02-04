@@ -15,6 +15,9 @@ namespace BLL.Entities
 		public DateTime CreatedAt { get; set; }
 		public Guid? CreatedBy { get; set; }
 
+		//Relation Many to One avec User: 
+		public User? Creator { get; set; } // pour faire le lien avec la table User
+
 		public Cocktail(Guid cocktail_Id, string name, string instructions, DateTime createdAt, string? description = null, Guid? createdBy = null)
 		{
 			Cocktail_Id = cocktail_Id;

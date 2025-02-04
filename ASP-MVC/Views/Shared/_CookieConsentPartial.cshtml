@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+@{
+	//1. Fonctionnalité permettant de vérifier si le User a consenti
+	ITrackingConsentFeature? consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+
+	//2. On affiche la bannière si pas donné de consentement
+	bool showBanner = !consentFeature?.CanTrack ?? false;
+
+	//3. On récupère la cookiestring. Il est l'Id de notre session
+	string? cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@* 4. Si on doit afficher la bannière : *@
+@if(showBanner){
+	<div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+		Ce site utilise des cookies pour son bon fonctionnement
+		<br/>
+		<a asp-action="privacy" asp-controller="Home">En savoir plus</a>
+		<button type="button" class="accept-policy btn-btn outline-success rounded-pill" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">Accepter</button>
+	</div>
+
+	// 5. Javascript
+	<script>
+		(function(){ 
+			// 5.1.On récupère le premier bouton de la Div qui a pour attribut cookieString
+
+			let button = document.querySelector("#cookieConsent button[data-cookie-string]");
+
+			//5.2. On ajoute un event qui va attribuer la cookie string au cookie, et ne s'exécute qu'une seule fois
+
+			button.addEventListener("click",function(event){
+				document.cookie = button.dataset.cookieString;
+			}, false);
+		})();
+	</script>
+}
+@* else{ *@
+@* 	@showBanner *@
+@* } *@
