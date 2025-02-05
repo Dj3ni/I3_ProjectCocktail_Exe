@@ -1,6 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[SP_User_ChangeRole]
-	@param1 int = 0,
-	@param2 int
+	@user_id UNIQUEIDENTIFIER,
+	@role NVARCHAR(8)
 AS
-	SELECT @param1, @param2
-RETURN 0
+BEGIN
+	UPDATE [User]
+		SET [Role] = @role
+		WHERE [User_Id] = @user_id
+END

@@ -7,7 +7,8 @@ BEGIN
 			[Last_Name],
 			[Email], 
 			[CreatedAt], 
-			[DisabledAt]
+			[DisabledAt],
+			[Role]
 		FROM [User]
 		WHERE [User_Id] = @user_id
 END

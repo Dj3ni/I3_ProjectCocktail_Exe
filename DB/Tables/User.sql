@@ -7,8 +7,9 @@
     [Salt]       UNIQUEIDENTIFIER NOT NULL,
     [CreatedAt]  DATETIME2        NOT NULL  DEFAULT GETDATE(),
     [DisabledAt] DATETIME2, 
-    [Role] NCHAR(10) NULL, 
+    [Role] NVARCHAR(8) NOT NULL DEFAULT 'User', 
     CONSTRAINT [PK_User] PRIMARY KEY ([User_Id]), 
-    CONSTRAINT [UK_User_Email] UNIQUE ([Email])
+    CONSTRAINT [UK_User_Email] UNIQUE ([Email]),
+	CONSTRAINT [FK_User_Role] FOREIGN KEY ([Role]) REFERENCES [Role]([Role])
 );
 

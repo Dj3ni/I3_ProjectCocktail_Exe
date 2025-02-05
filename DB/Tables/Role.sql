@@ -1,0 +1,4 @@
+﻿CREATE TABLE [dbo].[Role]
+(
+	[Role] NVARCHAR(8) NOT NULL PRIMARY KEY
+)

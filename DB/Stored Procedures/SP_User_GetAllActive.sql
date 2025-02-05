@@ -6,7 +6,8 @@ BEGIN
 			[Last_Name],
 			[Email],
 			[CreatedAt],
-			[DisabledAt] 
+			[DisabledAt],
+			[Role]
 		FROM [User]
 		WHERE [DisabledAt] IS NULL
 END
