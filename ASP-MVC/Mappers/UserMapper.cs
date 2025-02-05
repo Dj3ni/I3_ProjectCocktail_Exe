@@ -40,7 +40,7 @@ namespace ASP_MVC.Mappers
 					user.Email,
 					user.Password,
 					DateTime.Now,
-					null
+					"User"
 				);
 		}
 
@@ -67,7 +67,7 @@ namespace ASP_MVC.Mappers
 				user.Email,
 				"********",
 				DateTime.Now,
-				null
+				"User"
 			);
 		}
 
