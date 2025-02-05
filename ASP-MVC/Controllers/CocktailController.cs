@@ -99,7 +99,14 @@ namespace ASP_MVC.Controllers
 		{
 			try
 			{
-				CocktailEditForm model = _cocktailService.GetById(id).EditForm();
+				Cocktail cocktail = _cocktailService.GetById(id);
+				if(!(_sessionManager.ConnectedUser.UserId == cocktail.CreatedBy))
+				{
+					// Voir pour mettre un message d'erreur
+					return RedirectToAction(nameof(Index));
+				}
+
+				CocktailEditForm model = cocktail.EditForm();
 				return View(model);
 			}
 			catch
