@@ -40,7 +40,7 @@ namespace ConsoleTest
 			foreach (Cocktail cocktail in service.GetAll()) {
 				Console.WriteLine($"{cocktail.Cocktail_Id} : {cocktail.Name}");
 			}
-			Cocktail drink = service.GetCocktail(Guid.Parse("2dd0250e-57d6-49bd-9a44-0d3a81de03fd"));
+			Cocktail drink = service.GetById(Guid.Parse("2dd0250e-57d6-49bd-9a44-0d3a81de03fd"));
 
 			Console.WriteLine($"{drink.Name}");
 

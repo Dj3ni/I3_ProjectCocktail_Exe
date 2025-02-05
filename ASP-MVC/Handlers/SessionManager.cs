@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using BLL.Entities;
+using System.Text.Json;
 
 namespace ASP_MVC.Handlers
 {
@@ -19,7 +20,7 @@ namespace ASP_MVC.Handlers
 			set { _session.SetInt32(nameof(CountVisitedPage), value); }
 		}
 
-		//Savoir si User connecté
+		/****** Savoir si User connecté *********/
 		public ConnectedUser? ConnectedUser
 		{
 			get { return JsonSerializer.Deserialize<ConnectedUser?>( _session.GetString(nameof(ConnectedUser))?? "null"); }
@@ -44,6 +45,30 @@ namespace ASP_MVC.Handlers
 		public void Logout()
 		{
 			ConnectedUser = null;
+		}
+
+		/**** Exe Liste des 5 derniers cocktails consultés ******/
+		private const short  _maxSizeList = 5;
+
+		public Queue<Cocktail> VisitedCocktails { get; private set; }
+		//{
+		//	get { return new List<Cocktail>().ToArray(); }
+		//	private set;
+		//}
+		
+		public void AddToVisited(Cocktail cocktail)
+		{
+			if( VisitedCocktails == null ) throw new ArgumentNullException(nameof( VisitedCocktails));
+			if(VisitedCocktails.Count()< _maxSizeList)
+			{
+				//VisitedCocktails.ToList().Add(cocktail);
+				VisitedCocktails.Enqueue(cocktail);
+			}
+			else
+			{
+				VisitedCocktails.Dequeue();
+				VisitedCocktails.Enqueue(cocktail);
+			}
 		}
 
 	}
