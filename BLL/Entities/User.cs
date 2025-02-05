@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Entities
 {
-	//public Enum0 UserRole { "Admin","User"}
+	public enum UserRole { User, Admin }
 
 	public class User
 	{
@@ -20,7 +20,7 @@ namespace BLL.Entities
 		private DateTime? _disabledAt;
 		//public DateTime? DisabledAt { get { return _disabledAt; }}
 
-		//public 
+		public UserRole Role { get; set; }
 
 		//Relation One To Many avec Cocktail
 		public IEnumerable<Cocktail> Cocktails { get; set; }
@@ -30,7 +30,7 @@ namespace BLL.Entities
 			get { return _disabledAt is not null; }
 		}
 
-		public User(Guid user_Id, string first_Name, string last_Name, string email, string password, DateTime createdAt, DateTime? disabledAt)
+		public User(Guid user_Id, string first_Name, string last_Name, string email, string password, DateTime createdAt, DateTime? disabledAt, string role)
 		{
 			User_Id = user_Id;
 			First_Name = first_Name;
@@ -39,9 +39,24 @@ namespace BLL.Entities
 			Password = password;
 			CreatedAt = createdAt;
 			_disabledAt = disabledAt;
+			Role = Enum.Parse<UserRole>(role);
 		}
 
-		
-			
+		// Surcharges de controller si besoin
+		public User(string first_Name, string last_Name, string email, string password)
+		{
+			First_Name = first_Name;
+			Last_Name = last_Name;
+			Email = email;
+			Password = password;
+		}
+
+		public User(string first_Name, string last_Name, string email)
+		{
+			First_Name = first_Name;
+			Last_Name = last_Name;
+			Email = email;
+		}
+
 	}
 }

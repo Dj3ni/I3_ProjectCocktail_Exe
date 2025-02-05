@@ -52,7 +52,7 @@ namespace FakeDAL.Services
 			return _users;
 		}
 
-		public User Get(Guid id)
+		public User GetById(Guid id)
 		{
 			return _users.Where(u => u.User_Id == id).SingleOrDefault();
 		}

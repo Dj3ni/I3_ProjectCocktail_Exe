@@ -9,7 +9,7 @@ namespace ASP_MVC.Handlers.ActionFilters
 	{
 		private string[] _roles;
 
-		public AdminPermissionNeededAttribute() : this("ADMIN") { }
+		public AdminPermissionNeededAttribute() : this("Admin") { }
 		public AdminPermissionNeededAttribute(params string[] roles)
 		{
 			_roles = roles;
@@ -24,11 +24,11 @@ namespace ASP_MVC.Handlers.ActionFilters
 				return;
 			}
 			//Si connecté, on vérifie que dans les rôles autorisés
-		//	ConnectedUser user = JsonSerializer.Deserialize<ConnectedUser>(json);
-		//	if (!_roles.Contains(user.Role))
-		//	{
-		//		context.Result = new RedirectToActionResult("Index","Home",null);	
-		//	}
+			ConnectedUser user = JsonSerializer.Deserialize<ConnectedUser>(json);
+			if (!_roles.Contains(user.Role))
+			{
+				context.Result = new RedirectToActionResult("Index", "Home", null);
+			}
 		}
 	}
 }

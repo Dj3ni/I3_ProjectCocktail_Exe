@@ -154,5 +154,31 @@ namespace ASP_MVC.Controllers
 				return View();
 			}
 		}
+
+		//[AdminNeeded("Admin","Autor","User")]
+		[AdminPermissionNeeded]
+		public IActionResult ChangeRole(Guid id)
+		{
+			return View();
+		}
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		//[AdminNeeded("Admin", "Autor", "User")]
+		[AdminPermissionNeeded]
+		public IActionResult ChangeRole(Guid id, IFormCollection collection)
+		{
+			try
+			{
+				//Vérifier le formulaire
+				//Demander un changement en DB
+				return RedirectToAction(nameof(Index));
+			}
+			catch (Exception)
+			{
+				return View();
+			}
+		}
 	}
 }

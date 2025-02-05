@@ -9,7 +9,7 @@ namespace ASP_MVC.Handlers.ActionFilters
 	{
 		private string _action;
 		private string _controller;
-		private bool _routeValue;
+		private bool _getRouteValue;
 
 		// constructeurs
 		// Ici on dit que si rien n'est spécifié, par défaut on renvoie vers la page Login
@@ -20,7 +20,7 @@ namespace ASP_MVC.Handlers.ActionFilters
 		{
 			_action = action;
 			_controller = controller;
-			_routeValue = getRouteValue;
+			_getRouteValue = getRouteValue;
 		}
 
 		public void OnAuthorization(AuthorizationFilterContext context)
@@ -28,12 +28,12 @@ namespace ASP_MVC.Handlers.ActionFilters
 			if (context.HttpContext.Session.GetString(nameof(SessionManager.ConnectedUser)) is null)
 			{
 				object? routeValue = null;
-				if (_routeValue)
+				if (_getRouteValue)
 				{
 					routeValue = context.RouteData.Values;
 				}
 				// If not connected: we want the user to log in first before taking action
-				context.Result = new RedirectToActionResult (_action,_controller,_routeValue);
+				context.Result = new RedirectToActionResult (_action,_controller,_getRouteValue);
 			}
 		}
 	}

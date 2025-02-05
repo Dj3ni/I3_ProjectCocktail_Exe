@@ -23,6 +23,7 @@ namespace DAL.Mappers
 									User.Email)],
 				Password = "********",
 				DisabledAt = (record[nameof(User.DisabledAt)] is DBNull) ? null : (DateTime?)record[nameof(User.DisabledAt)],
+				Role = (string)record[nameof(User.Role)]
 			};
 		}
 

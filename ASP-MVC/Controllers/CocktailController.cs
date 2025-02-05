@@ -1,4 +1,5 @@
 ﻿using ASP_MVC.Handlers;
+using ASP_MVC.Handlers.ActionFilters;
 using ASP_MVC.Mappers;
 using ASP_MVC.Models.Cocktail;
 using AspNetCoreGeneratedDocument;
@@ -15,11 +16,17 @@ namespace ASP_MVC.Controllers
 		//Constructeur:
 		private ICocktailRepository<BLL.Entities.Cocktail> _cocktailService;
 		private readonly SessionManager _sessionManager;
+		private readonly CocktailQueueCorrection _cocktailQueueCorrection;
 
-		public CocktailController(ICocktailRepository<Cocktail> cocktailService, SessionManager sessionManager)
+		public CocktailController(
+			ICocktailRepository<Cocktail> cocktailService,
+			SessionManager sessionManager,
+			CocktailQueueCorrection cocktailQueue
+			)
 		{
 			_cocktailService = cocktailService;
 			_sessionManager = sessionManager;
+			_cocktailQueueCorrection = cocktailQueue;
 		}
 
 		// GET: CocktailController
@@ -45,9 +52,10 @@ namespace ASP_MVC.Controllers
 			{
 				// On envoie le modèle de vue!
 				CocktailDetails model = _cocktailService.GetById(id).ToDetails();
-				Cocktail cocktail = _cocktailService.GetById(id);
-				_sessionManager.AddToVisited(cocktail);
-				ViewData["VisitedCocktails"] = _sessionManager.VisitedCocktails.Select(c => c.ToListItem()).ToList();
+				_cocktailQueueCorrection.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
+
+				//_sessionManager.AddToVisited(model.Cocktail_Id);
+				//ViewData["VisitedCocktails"] = _sessionManager.VisitedCocktails.Select(c => c.ToListItem()).ToList();
 				return View(model);
 			}
 			catch (Exception)
@@ -56,6 +64,8 @@ namespace ASP_MVC.Controllers
 			}
 		}
 
+
+		[ConnectionNeeded]
 		// GET: CocktailController/Create
 		public ActionResult Create()
 		{
@@ -65,6 +75,7 @@ namespace ASP_MVC.Controllers
 		// POST: CocktailController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Create(CocktailCreate form)
 		{
 			try
@@ -82,16 +93,12 @@ namespace ASP_MVC.Controllers
 		}
 
 		// GET: CocktailController/Edit/5
+		[ConnectionNeeded("Details", "Cocktail", true)]
 		public ActionResult Edit(Guid id)
 		{
 			try
 			{
-				Cocktail cocktail = _cocktailService.GetById(id);
-				if (!(_sessionManager.ConnectedUser.UserId == cocktail.CreatedBy))
-				{
-
-				}
-				CocktailEditForm model = cocktail.EditForm();
+				CocktailEditForm model = _cocktailService.GetById(id).EditForm();
 				return View(model);
 			}
 			catch
@@ -104,6 +111,7 @@ namespace ASP_MVC.Controllers
 		// POST: CocktailController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Edit(Guid id, CocktailEditForm form)
 		{
 			try
@@ -119,6 +127,7 @@ namespace ASP_MVC.Controllers
 		}
 
 		// GET: CocktailController/Delete/5
+		[ConnectionNeeded]
 		public ActionResult Delete(Guid id)
 		{
 			try
@@ -135,6 +144,7 @@ namespace ASP_MVC.Controllers
 		// POST: CocktailController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Delete(Guid id, CocktailDelete form)
 		{
 			try

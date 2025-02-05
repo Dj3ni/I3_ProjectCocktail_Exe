@@ -15,5 +15,6 @@ namespace DAL.Entities
 		public string Password { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime? DisabledAt { get; set; }
+		public string Role { get; set; }
 	}
 }

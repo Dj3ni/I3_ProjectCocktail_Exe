@@ -23,7 +23,8 @@ namespace BLL.Mappers
 					user.Email,
 					user.Password,
 					user.CreatedAt,
-					user.DisabledAt);
+					user.DisabledAt,
+					user.Role);
 		}
 
 		//USER: Function to convert object BLL to DAL Object
@@ -40,7 +41,8 @@ namespace BLL.Mappers
 				Email = user.Email,
 				CreatedAt = user.CreatedAt,
 				// Disabled at is private we cannot change it, so we use the bool IsDisabled
-				DisabledAt = (user.IsDisabled) ? null: new DateTime()
+				DisabledAt = (user.IsDisabled) ? null: new DateTime(),
+				Role = user.Role.ToString()
 			};
 		}
 
