@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Entities
 {
+	//public Enum0 UserRole { "Admin","User"}
+
 	public class User
 	{
 		public Guid User_Id { get; set; }
@@ -17,6 +19,8 @@ namespace BLL.Entities
 
 		private DateTime? _disabledAt;
 		//public DateTime? DisabledAt { get { return _disabledAt; }}
+
+		//public 
 
 		//Relation One To Many avec Cocktail
 		public IEnumerable<Cocktail> Cocktails { get; set; }

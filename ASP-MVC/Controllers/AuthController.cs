@@ -1,4 +1,5 @@
 ﻿using ASP_MVC.Handlers;
+using ASP_MVC.Handlers.ActionFilters;
 using ASP_MVC.Models.Auth;
 using BLL.Entities;
 using Common.Repositories;
@@ -24,12 +25,14 @@ namespace ASP_MVC.Controllers
 		}
 
 		[HttpGet]
+		[AnonymousNeeded]
 		public IActionResult Login()
 		{
 			return View();
 		}
 
 		[HttpPost]
+		[AnonymousNeeded]
 		public IActionResult Login(AuthLoginForm loginForm)
 		{
 			try
@@ -58,6 +61,7 @@ namespace ASP_MVC.Controllers
 		}
 
 		[HttpPost]
+		
 		public IActionResult Logout(IFormCollection form)
 		{
 			try

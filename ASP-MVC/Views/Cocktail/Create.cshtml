@@ -17,13 +17,11 @@
 	// @foreach (User user in userService.GetAll()){
 	// 	new SelectListItem {Value = $"{user.Id.ToString()}", Text = $"{user.First_Name}" };
 	// };
-	
-
 }
 
 <h1>Create</h1>
 
-<h4>Add a new awesome cocktail to the collection</h4>
+<h4>🍹Add a new awesome cocktail to the collection🍹</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -44,11 +42,16 @@
                 <input asp-for="Cocktail_Instructions" class="form-control" />
                 <span asp-validation-for="Cocktail_Instructions" class="text-danger"></span>
             </div>
-			<div class="form-group">
-				<label asp-for="Cocktail_Author" class="control-label"></label>
-				<select asp-for="Cocktail_Author" asp-items="UserList" class="form-control"></select>
-				<span asp-validation-for="Cocktail_Author" class="text-danger"></span>
+			<div class="form-group"> 
+			<input asp-for="Cocktail_Author"  class="form-control" value ="@sessionManager.ConnectedUser?.UserId" hidden/>
 			</div>
+
+			@* Test relation table user avant utilisation de la session *@
+			@* <div class="form-group">
+			@* 	<label asp-for="Cocktail_Author" class="control-label"></label> *@
+			@* 	<select asp-for="Cocktail_Author" asp-items="UserList" class="form-control"></select> *@
+			@* 	<span asp-validation-for="Cocktail_Author" class="text-danger"></span> *@
+			@* </div> *@
 
 
             <div class="form-group">

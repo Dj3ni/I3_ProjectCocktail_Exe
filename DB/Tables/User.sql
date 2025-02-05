@@ -7,6 +7,7 @@
     [Salt]       UNIQUEIDENTIFIER NOT NULL,
     [CreatedAt]  DATETIME2        NOT NULL  DEFAULT GETDATE(),
     [DisabledAt] DATETIME2, 
+    [Role] NCHAR(10) NULL, 
     CONSTRAINT [PK_User] PRIMARY KEY ([User_Id]), 
     CONSTRAINT [UK_User_Email] UNIQUE ([Email])
 );

@@ -11,6 +11,7 @@ namespace ASP_MVC.Handlers
 		public SessionManager(IHttpContextAccessor accessor)
 		{
 			_session = accessor.HttpContext.Session;
+			//VisitedCocktails = new Queue<Cocktail>(); //pas utile, sauvegarde 2 *
 		}
 
 		// Example
@@ -50,18 +51,33 @@ namespace ASP_MVC.Handlers
 		/**** Exe Liste des 5 derniers cocktails consultés ******/
 		private const short  _maxSizeList = 5;
 
-		public Queue<Cocktail> VisitedCocktails { get; private set; }
-		//{
-		//	get { return new List<Cocktail>().ToArray(); }
-		//	private set;
-		//}
+		public Queue<Cocktail> VisitedCocktails {
+			get
+			{
+				return ReadList();
+			}
+			private set
+			{
+				SaveList();
+			}
+		}		
 		
 		public void AddToVisited(Cocktail cocktail)
 		{
-			if( VisitedCocktails == null ) throw new ArgumentNullException(nameof( VisitedCocktails));
+			if( VisitedCocktails == null ) throw new ArgumentNullException(nameof(VisitedCocktails));
+
+			//Correction: On crée direct une nouvelle liste qui reprend les infos de la session 
+			Queue<Cocktail> cocktailList = new Queue<Cocktail>(VisitedCocktails);
+
 			if(VisitedCocktails.Count()< _maxSizeList)
 			{
-				//VisitedCocktails.ToList().Add(cocktail);
+				// Évite les doublons en supprimant l'existant
+				if (VisitedCocktails.Any(c => c.Cocktail_Id == cocktail.Cocktail_Id))
+				{
+					VisitedCocktails = new Queue<Cocktail>(VisitedCocktails.Where(c => c.Cocktail_Id != cocktail.Cocktail_Id));
+				}
+
+				// Ajoute à la liste
 				VisitedCocktails.Enqueue(cocktail);
 			}
 			else
@@ -69,6 +85,21 @@ namespace ASP_MVC.Handlers
 				VisitedCocktails.Dequeue();
 				VisitedCocktails.Enqueue(cocktail);
 			}
+			SaveList();
+		}
+
+
+		public void SaveList()
+		{
+			_session.SetString(nameof(VisitedCocktails), JsonSerializer.Serialize(VisitedCocktails));
+		}
+
+		public Queue<Cocktail> ReadList()
+		{
+			string json = _session.GetString(nameof(VisitedCocktails));
+
+			return string.IsNullOrEmpty(json) ? new Queue<Cocktail>() : JsonSerializer.Deserialize<Queue<Cocktail>>(json);
+
 		}
 
 	}

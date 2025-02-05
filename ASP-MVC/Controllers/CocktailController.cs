@@ -47,6 +47,7 @@ namespace ASP_MVC.Controllers
 				CocktailDetails model = _cocktailService.GetById(id).ToDetails();
 				Cocktail cocktail = _cocktailService.GetById(id);
 				_sessionManager.AddToVisited(cocktail);
+				ViewData["VisitedCocktails"] = _sessionManager.VisitedCocktails.Select(c => c.ToListItem()).ToList();
 				return View(model);
 			}
 			catch (Exception)
@@ -83,8 +84,21 @@ namespace ASP_MVC.Controllers
 		// GET: CocktailController/Edit/5
 		public ActionResult Edit(Guid id)
 		{
-			CocktailEditForm model = _cocktailService.GetById(id).EditForm();
-			return View(model);
+			try
+			{
+				Cocktail cocktail = _cocktailService.GetById(id);
+				if (!(_sessionManager.ConnectedUser.UserId == cocktail.CreatedBy))
+				{
+
+				}
+				CocktailEditForm model = cocktail.EditForm();
+				return View(model);
+			}
+			catch
+			{
+				return RedirectToAction(nameof(Index));
+			}
+			
 		}
 
 		// POST: CocktailController/Edit/5

@@ -86,6 +86,7 @@
     <Build Include="Stored Procedures\SP_Comment_Insert.sql" />
     <Build Include="Stored Procedures\SP_Comment_Delete.sql" />
     <Build Include="Stored Procedures\SP_Comment_Update.sql" />
+    <Build Include="Stored Procedures\SP_User_ChangeRole.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB.publish.xml" />

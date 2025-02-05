@@ -1,14 +1,26 @@
-﻿@model IEnumerable<ASP_MVC.Models.Cocktail.CocktailListItem>
+﻿@using BLL.Entities
+@model IEnumerable<ASP_MVC.Models.Cocktail.CocktailListItem>
 
 @{
-    ViewData["Title"] = "Index";
+	// ViewData["Title"] = "Index";
+	bool isConnected = sessionManager.ConnectedUser is not null;
+	IEnumerable<Cocktail> VisitedCocktails = sessionManager.VisitedCocktails;
+
 }
 
-<h1>All the best cocktails</h1>
+@* <partial name="_VisitedCocktailList" model="@VisitedCocktails" /> *@
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>🍹 All the best cocktails</h1>
+
+@if(isConnected){
+	<p>
+		<a asp-action="Create">Create New</a>
+	</p>
+}
+
+
+<partial name="_VisitedCocktailList" model='ViewData["VisitedCocktails"]' />
+
 <table class="table">
     <thead>
         <tr>
@@ -30,11 +42,15 @@
             @* <td> *@
             @*     @Html.DisplayFor(modelItem => item.Cocktail_Description) *@
             @* </td> *@
-            <td>
-					@Html.ActionLink("Edit", "Edit", new { id = item.Cocktail_Id }) |
+				<td>
 					@Html.ActionLink("Details", "Details", new { id = item.Cocktail_Id }) |
-					@Html.ActionLink("Delete", "Delete", new { id = item.Cocktail_Id })
-            </td>
+					@if(isConnected){
+						<span>@Html.ActionLink("Edit", "Edit", new { id = item.Cocktail_Id }) |</span>
+						@Html.ActionLink("Delete", "Delete", new { id = item.Cocktail_Id })
+					}
+				</td>
+
+            
         </tr>
 }
     </tbody>

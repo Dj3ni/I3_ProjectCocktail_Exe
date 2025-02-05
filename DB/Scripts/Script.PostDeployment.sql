@@ -9,6 +9,10 @@ Modèle de script de post-déploiement
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+--Ajout des rôles nécessaires à l'appli : User et Admin
+Insert Into [Role] Values ("USER"),("ADMIN");
+
 -- Déclaration de la table variable pour stocker les IDs insérés
 DECLARE @InsertedUserIds TABLE (UserId UNIQUEIDENTIFIER);
 
