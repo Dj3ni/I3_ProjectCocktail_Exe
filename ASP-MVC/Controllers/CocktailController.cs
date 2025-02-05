@@ -16,17 +16,17 @@ namespace ASP_MVC.Controllers
 		//Constructeur:
 		private ICocktailRepository<BLL.Entities.Cocktail> _cocktailService;
 		private readonly SessionManager _sessionManager;
-		private readonly CocktailQueueCorrection _cocktailQueueCorrection;
+		//private readonly CocktailQueueCorrection _cocktailQueueCorrection;
 
 		public CocktailController(
 			ICocktailRepository<Cocktail> cocktailService,
-			SessionManager sessionManager,
-			CocktailQueueCorrection cocktailQueue
+			SessionManager sessionManager
+			//CocktailQueueCorrection cocktailQueue
 			)
 		{
 			_cocktailService = cocktailService;
 			_sessionManager = sessionManager;
-			_cocktailQueueCorrection = cocktailQueue;
+			//_cocktailQueueCorrection = cocktailQueue;
 		}
 
 		// GET: CocktailController
@@ -52,7 +52,8 @@ namespace ASP_MVC.Controllers
 			{
 				// On envoie le modèle de vue!
 				CocktailDetails model = _cocktailService.GetById(id).ToDetails();
-				_cocktailQueueCorrection.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
+				_sessionManager.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
+				//_cocktailQueueCorrection.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
 
 				//_sessionManager.AddToVisited(model.Cocktail_Id);
 				//ViewData["VisitedCocktails"] = _sessionManager.VisitedCocktails.Select(c => c.ToListItem()).ToList();

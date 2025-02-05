@@ -1,6 +1,6 @@
 ﻿@using BLL.Entities
 @model IEnumerable<ASP_MVC.Models.Cocktail.CocktailListItem>
-@inject CocktailQueueCorrection cocktailQueue
+@* @inject CocktailQueueCorrection cocktailQueue *@
 
 @{
 	ViewData["Title"] = "Index";
@@ -19,8 +19,8 @@
 	</p>
 }
 
-<partial name="_CocktailListItemMin" model="@cocktailQueue.RecentlyVisitedCocktails" />
-@* <partial name="_VisitedCocktailList" model='ViewData["VisitedCocktails"]' /> *@
+@* <partial name="_CocktailListItemMin" model="@cocktailQueue.RecentlyVisitedCocktails" /> *@
+<partial name="_CocktailListItemMin" model="@sessionManager.RecentlyVisitedCocktails" />
 
 <table class="table">
     <thead>
