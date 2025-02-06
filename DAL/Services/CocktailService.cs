@@ -98,7 +98,7 @@ namespace DAL.Services
 					command.Parameters.AddWithValue(nameof(Cocktail.Name), cocktail.Name);
 					command.Parameters.AddWithValue(nameof(Cocktail.Instructions), cocktail.Instructions);
 					command.Parameters.AddWithValue(nameof(Cocktail.Description), cocktail.Description);
-					command.Parameters.AddWithValue("user_id",cocktail.CreatedBy); // We have to use the same name than in the StockedProcedure
+					command.Parameters.AddWithValue("user_id",(object?)cocktail.CreatedBy ?? DBNull.Value); // We have to use the same name than in the StockedProcedure
 					connection.Open();
 					return (Guid)command.ExecuteScalar();
 				}

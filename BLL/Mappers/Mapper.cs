@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -77,5 +78,37 @@ namespace BLL.Mappers
 				CreatedBy = cocktail.CreatedBy,
 			};
 		}
+
+		// COMMENT : From DAL data to BLL data
+		public static BLL.Entities.Comment ToBLL(this DAL.Entities.Comment comment)
+		{
+			if(comment == null) throw new ArgumentNullException( nameof(comment));
+			return new Comment(
+					comment.Comment_Id,
+					comment.Title,
+					comment.Content,
+					comment.Concern,
+					comment.CreatedAt,
+					comment.CreatedBy,
+					comment.Note
+				);
+		}
+
+		//COMMENT: From BLL data to DAL data
+		public static DAL.Entities.Comment ToDAL(this BLL.Entities.Comment comment)
+		{
+			if( comment == null) throw new ArgumentNullException(nameof (comment));
+			return new DAL.Entities.Comment()
+			{
+				Comment_Id = comment.Comment_Id,
+				Title = comment.Title,
+				Content = comment.Content,
+				Concern = comment.Concern,
+				CreatedAt = comment.CreatedAt,
+				CreatedBy = comment.CreatedBy,
+				Note = comment.Note
+			};
+		}
+
 	}
 }

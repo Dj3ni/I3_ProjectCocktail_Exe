@@ -25,6 +25,9 @@ namespace BLL.Entities
 		//Relation One To Many avec Cocktail
 		public IEnumerable<Cocktail> Cocktails { get; set; }
 
+		//Relation avec Comment
+		public IEnumerable<Comment> Comments { get; set; }
+
 		public bool IsDisabled
 		{
 			get { return _disabledAt is not null; }

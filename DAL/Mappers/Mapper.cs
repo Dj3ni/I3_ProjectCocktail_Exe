@@ -42,5 +42,19 @@ namespace DAL.Mappers
 			};
 		}
 
+		public static Comment ToComment(this IDataRecord record)
+		{
+			if (record is null) throw new ArgumentNullException(nameof(record));
+			return new Comment()
+			{
+				Comment_Id = (Guid)record[nameof(Comment.Comment_Id)],
+				Title = (string)record[nameof(Comment.Title)],
+				Content = (string)record[nameof(Comment.Content)],
+				Concern = (Guid)record[nameof(Comment.Concern)],
+				CreatedAt = (DateTime)record[nameof(Comment.CreatedAt)],
+				CreatedBy = (record[nameof(Comment.CreatedBy)] is null)? null : (Guid)record[nameof(Comment.CreatedBy)],
+				Note = (short)record[nameof(Comment.Note)],
+			};
+
 	}
 }

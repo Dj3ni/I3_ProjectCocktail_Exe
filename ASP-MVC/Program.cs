@@ -54,12 +54,15 @@ namespace ASP_MVC
 			builder.Services.AddScoped<DAL.Services.UserService>();*/
 
 			//Personalized services
-				//User
+				// USER
 				builder.Services.AddScoped<IUserRepository<BLL.Entities.User>,BLL.Services.UserService>();
 				builder.Services.AddScoped<IUserRepository<DAL.Entities.User>, DAL.Services.UserService>();
-				//Cocktails				
-			builder.Services.AddScoped<ICocktailRepository<BLL.Entities.Cocktail>, BLL.Services.CocktailService>();
-			builder.Services.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>();
+				// COCKTAILS				
+				builder.Services.AddScoped<ICocktailRepository<BLL.Entities.Cocktail>, BLL.Services.CocktailService>();
+				builder.Services.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>();
+				// COMMENTS
+				builder.Services.AddScoped<ICommentRepository<BLL.Entities.Comment>, BLL.Services.CommentService>();
+				builder.Services.AddScoped<ICommentRepository<DAL.Entities.Comment>, DAL.Services.CommentService>();
 
 			//Service SessionManager
 			builder.Services.AddScoped<SessionManager>();

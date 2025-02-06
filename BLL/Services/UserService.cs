@@ -26,6 +26,7 @@ namespace BLL.Services
 		}*/        /* If we used the repository pattern, we can use the Interface!*/
 		private IUserRepository<DAL.Entities.User> _userService;
 		private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
+		private ICommentRepository<DAL.Entities.Comment> _commentService;
 		public UserService(
 				IUserRepository<DAL.Entities.User> userService,
 				ICocktailRepository<DAL.Entities.Cocktail> cocktailService)
@@ -47,6 +48,7 @@ namespace BLL.Services
 			//return _userService.GetById(id).ToBLL();//we don't need select because we are not in a collection
 			User user = _userService.GetById(id).ToBLL(); // We get the user
 			user.Cocktails = _cocktailService.GetByUser(id).Select(dal =>dal.ToBLL()); // We get all the cocktails associated with him
+			user.Comments = _commentService.GetByUserId(id).Select(dal => dal.ToBLL());
 
 			return user;
 

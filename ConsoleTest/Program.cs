@@ -30,7 +30,6 @@ namespace ConsoleTest
 
 			Console.WriteLine("Test Cocktails");
 
-			//CocktailService service = new CocktailService();
 			ServiceProvider serviceProvider = new ServiceCollection()
 				.AddScoped<ICocktailRepository<DAL.Entities.Cocktail>, DAL.Services.CocktailService>()
 				.AddScoped<BLL.Services.CocktailService>()
@@ -43,6 +42,8 @@ namespace ConsoleTest
 			Cocktail drink = service.GetById(Guid.Parse("2dd0250e-57d6-49bd-9a44-0d3a81de03fd"));
 
 			Console.WriteLine($"{drink.Name}");
+
+
 
 		}
 	}
