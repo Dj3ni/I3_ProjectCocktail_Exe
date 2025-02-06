@@ -18,7 +18,7 @@ namespace ASP_MVC.Handlers.ActionFilters
 		public void OnAuthorization(AuthorizationFilterContext context)
 		{
 			string? json = context.HttpContext.Session.GetString(nameof(SessionManager.ConnectedUser));
-			if (json is null) {
+			if (json is null) { // utilisateur non connecté
 
 				context.Result = new RedirectToActionResult("Home","Auth",null);
 				return;

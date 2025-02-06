@@ -8,6 +8,13 @@
 	// IEnumerable<Cocktail> VisitedCocktails = sessionManager.VisitedCocktails;
 
 }
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+	<div class="alert alert-danger alert-dismissible show fade" role="alert">
+		<p>@TempData["ErrorMessage"]</p>
+		<button class="btn-close btn" data-bs-dismiss="alert"></button>
+	</div>
+}
 
 @* <partial name="_VisitedCocktailList" model="@VisitedCocktails" /> *@
 
@@ -49,10 +56,7 @@
 						<span>@Html.ActionLink("Edit", "Edit", new { id = item.Cocktail_Id }) |</span>
 						@Html.ActionLink("Delete", "Delete", new { id = item.Cocktail_Id })
 					}
-				</td>
-
-            
-        </tr>
-}
+				</td>            
+        </tr>}
     </tbody>
 </table>

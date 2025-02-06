@@ -13,7 +13,18 @@ namespace ASP_MVC
 			builder.Services.AddControllersWithViews();
 
 			// Add Session services 
-			builder.Services.AddDistributedMemoryCache();
+
+			//Ce service n'est utilisé que pour le developpement et debogage 
+			//builder.Services.AddDistributedMemoryCache();
+
+			// Pour la prod on va plutôt utiliser ceci:
+			builder.Services.AddDistributedSqlServerCache(
+				options =>{
+					options.ConnectionString = builder.Configuration.GetConnectionString("Session-DB");
+					options.SchemaName = "dbo";
+					options.TableName = "Session";
+				});
+
 			builder.Services.AddSession(
 				options =>
 				{
