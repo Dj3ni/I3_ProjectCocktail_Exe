@@ -29,35 +29,34 @@ namespace ASP_MVC.Controllers
 		// GET: CommentController
 		public ActionResult Index()
 		{
-			
-			return View();
+			return RedirectToAction("Index", "Home");
+
+			//return RedirectToAction(nameof(UserComments), new { id = _sessionManager.ConnectedUser.UserId });
 		}
 
-		[IsCreator]
-		// GET: CommentController/Details/5
-		public ActionResult Details(Guid id)
-		{
-			CommentDetails model = _commentService.GetByUserId(_sessionManager.ConnectedUser.UserId)
-													.FirstOrDefault(comment => comment.Comment_Id == id)
-													.ToDetails();
-			return View(model);
-		}
+		//[IsCreator]
+		//// GET: CommentController/Details/5
+		//public ActionResult Details(Guid id)
+		//{
+		//	CommentDetails model = _commentService.GetByUserId(_sessionManager.ConnectedUser.UserId)
+		//											.FirstOrDefault(comment => comment.Comment_Id == id)
+		//											.ToDetails();
+		//	return View(model);
+		//}
 
-		[IsCreator]
-		public ActionResult UserComments(Guid userId)
-		{
-			IEnumerable<CommentListItem> model = _commentService.GetByUserId(userId).Select(bll => bll.ToListItem());
-			return View(model);
-		}
-		[ConnectionNeeded]
-		public ActionResult CocktailComments(Guid cocktailId)
-		{
-			IEnumerable<CommentListItem> model = _commentService.GetByCocktailId(cocktailId).Select(bll => bll.ToListItem());
-			return View(model);
-		}
+		//[IsCreator]
+		//public ActionResult UserComments(Guid userId)
+		//{
+		//	IEnumerable<CommentListItem> model = _commentService.GetByUserId(userId).Select(bll => bll.ToListItem());
+		//	return View(model);
+		//}
+		//[ConnectionNeeded]
+		//public ActionResult CocktailComments(Guid cocktailId)
+		//{
+		//	IEnumerable<CommentListItem> model = _commentService.GetByCocktailId(cocktailId).Select(bll => bll.ToListItem());
+		//	return View(model);
+		//}
 
-
-		[IsCreator]
 		// GET: CommentController/Create
 		public ActionResult Create()
 		{
@@ -73,7 +72,7 @@ namespace ASP_MVC.Controllers
 			{
 				if (!ModelState.IsValid) throw new ArgumentException(nameof(form));
 				Guid id = _commentService.Insert(form.ToBLL());
-				return RedirectToAction(nameof(Details), new {id});
+				return RedirectToAction("Index","Home");
 			}
 			catch
 			{
@@ -84,17 +83,30 @@ namespace ASP_MVC.Controllers
 		// GET: CommentController/Edit/5
 		public ActionResult Edit(Guid id)
 		{
-			return View();
+			try
+			{
+				CommentEditForm model = _commentService.GetByUserId(_sessionManager.ConnectedUser.UserId)
+															.FirstOrDefault(comment => comment.Comment_Id == id)
+															.ToEditForm();
+				return View(model);
+			}
+			catch (Exception)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 		}
 
 		// POST: CommentController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(Guid id, IFormCollection collection)
+		public ActionResult Edit(Guid id, CommentEditForm form)
 		{
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				if(!ModelState.IsValid) throw new ArgumentException(nameof(form));
+				_commentService.Update(id,form.ToBLL());
+
+				return RedirectToAction("Index", "Home");
 			}
 			catch
 			{
@@ -105,16 +117,28 @@ namespace ASP_MVC.Controllers
 		// GET: CommentController/Delete/5
 		public ActionResult Delete(Guid id)
 		{
-			return View();
+			try
+			{
+				CommentDelete model = _commentService.GetByUserId(_sessionManager.ConnectedUser.UserId)
+															.FirstOrDefault(comment => comment.Comment_Id == id)
+															.ToDeleteForm();
+				return View(model);
+			}
+			catch
+			{
+				return RedirectToAction("Index", "Home");
+			}
 		}
 
 		// POST: CommentController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(Guid id, IFormCollection collection)
+		public ActionResult Delete(Guid id, CommentDelete form)
 		{
 			try
 			{
+				if(!ModelState.IsValid) throw new ArgumentException(nameof(_commentService));
+				_commentService.Delete(id);
 				return RedirectToAction(nameof(Index));
 			}
 			catch

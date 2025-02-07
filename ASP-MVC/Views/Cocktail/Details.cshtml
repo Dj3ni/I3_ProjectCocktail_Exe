@@ -1,8 +1,8 @@
 ﻿@model ASP_MVC.Models.Cocktail.CocktailDetails
 
-@{
-    ViewData["Title"] = "Details";
-}
+@* @{ *@
+@*     ViewData["Title"] = "Details"; *@
+@* } *@
 
 <h1>Details</h1>
 
@@ -46,3 +46,5 @@
 	@Html.ActionLink("Edit", "Edit", new { id = Model.Cocktail_Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<partial name ="_CommentListItem" model="Model.Comments"/>

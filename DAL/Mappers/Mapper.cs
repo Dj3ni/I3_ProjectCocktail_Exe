@@ -36,7 +36,7 @@ namespace DAL.Mappers
 				Cocktail_Id = (Guid)record[nameof(Cocktail.Cocktail_Id)],
 				Name = (string)record[nameof(Cocktail.Name)],
 				Instructions = (string)record[nameof(Cocktail.Instructions)],
-				Description = (record[nameof(Cocktail.Description)] is DBNull) ? null : (string?) record[nameof(Cocktail.Description)],
+				Description = (record[nameof(Cocktail.Description)] is DBNull) ? null : (string?)record[nameof(Cocktail.Description)],
 				CreatedAt = (DateTime)record[nameof(Cocktail.CreatedAt)],
 				CreatedBy = (record[nameof(Cocktail.CreatedBy)] is null) ? null : (Guid?)record[nameof(Cocktail.CreatedBy)]
 			};
@@ -52,9 +52,10 @@ namespace DAL.Mappers
 				Content = (string)record[nameof(Comment.Content)],
 				Concern = (Guid)record[nameof(Comment.Concern)],
 				CreatedAt = (DateTime)record[nameof(Comment.CreatedAt)],
-				CreatedBy = (record[nameof(Comment.CreatedBy)] is null)? null : (Guid)record[nameof(Comment.CreatedBy)],
-				Note = (short)record[nameof(Comment.Note)],
+				CreatedBy = (record[nameof(Comment.CreatedBy)] is null) ? null : (Guid)record[nameof(Comment.CreatedBy)],
+				Note = (record[nameof(Comment.Note)] is null)? null: (byte?)record[nameof(Comment.Note)],
 			};
 
+		}
 	}
 }

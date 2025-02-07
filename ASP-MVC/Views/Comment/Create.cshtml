@@ -1,0 +1,67 @@
+﻿@using BLL.Entities
+@using Common.Repositories
+@model ASP_MVC.Models.Comment.CommentCreateForm
+@inject ICocktailRepository<Cocktail> cocktailService
+
+
+@{
+	ViewData["Title"] = "Create";
+	List<SelectListItem> CocktailList = cocktailService.GetAll().Select(cocktail => new SelectListItem
+			{
+				Value = cocktail.Cocktail_Id.ToString(),
+				Text = cocktail.Name
+			}).ToList();
+}
+
+<h1>Create a comment</h1>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Content" class="control-label"></label>
+				<input asp-for="Content" class="form-control" />
+				<span asp-validation-for="Content" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Note" class="control-label"></label>
+				<input asp-for="Note" class="form-control" />
+				<span asp-validation-for="Note" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input asp-for="CreatedBy" class="form-control" value="@sessionManager.ConnectedUser?.UserId" hidden />
+			</div>
+			<div class="form-group">
+				<label asp-for="Cocktail" class="control-label"></label>
+				<select asp-for="Cocktail" asp-items="@CocktailList"></select>
+				<span asp-validation-for="Cocktail" class="text-danger"></span>
+			</div>
+			
+
+			
+			@* <div class="form-group"> *@
+			@* 	<input asp-for="Cocktail" class="form-control" value="@sessionManager.ConnectedUser?.UserId" hidden /> *@
+			@* </div> *@
+
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ASP_MVC.Models.Comment.CommentListItem>
+
+<h4>Comments</h4>
+<table class="table">
+	<tbody>
+
+		@if (Model is not null)
+		{
+		<thead>
+			<tr>
+				<th>
+						@Html.DisplayNameFor(model => model.Note)
+				</th>
+				<th>
+						@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+						@Html.DisplayNameFor(model => model.Content)
+				</th>
+				<th>
+						@Html.DisplayNameFor(model => model.CreatedBy)
+				</th>
+			</tr>
+		</thead>
+
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Note)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Content)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.CreatedBy)
+					</td>
+				</tr>
+			}
+		}
+		else 
+		{ 
+			<tr>
+				<td>
+					<p>No comments for this cocktail</p>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

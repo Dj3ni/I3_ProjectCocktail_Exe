@@ -35,6 +35,7 @@
 		<h4>@Html.DisplayNameFor(Model =>Model.Cocktails)</h4>
 		@* @Html.Partial("_CocktailsList", Model.Cocktails) *@
 		<partial name="_CocktailsList" model = "Model.Cocktails"/>
+		<partial name="_CommentListItem" model="Model.Comments"/>
     </dl>
 </div>
 <div>

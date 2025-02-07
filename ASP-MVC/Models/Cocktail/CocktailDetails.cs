@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using ASP_MVC.Models.Comment;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,7 +25,9 @@ namespace ASP_MVC.Models.Cocktail
 		[DisplayName("This recipe was shared by : ")]
 		public string? Creator { get; set; }
 
-		
+		[DisplayName("Comments: ")]
+		public IEnumerable<CommentListItem> Comments { get; set; }
+
 
 
 

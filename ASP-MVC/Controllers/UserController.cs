@@ -55,6 +55,7 @@ namespace ASP_MVC.Controllers
 			{
 				//We use the mapper method to convert BLL object to ASP object
 				UserDetails model = _userService.GetById(id).ToDetails();
+				
 				return View(model);
 			}
 			catch (Exception)

@@ -43,47 +43,50 @@ namespace ASP_MVC.Mappers
 				Guid.Empty,
 				form.Title,
 				form.Content,
-				Guid.Empty,
+				form.Cocktail,
 				DateTime.Now,
-				null,
+				(form.CreatedBy is null)? null : form.CreatedBy,
 				(form.Note is null) ? null : form.Note
 				);
 		}
 
 		// Convert BLL to ASP Data for Update
 
-		public static CocktailEditForm EditForm(this Comment comment)
+		public static CommentEditForm ToEditForm(this Comment comment)
 		{
 			if (comment == null) throw new ArgumentNullException(nameof(comment));
-			return new CocktailEditForm()
+			return new CommentEditForm()
 			{
-				//Cocktail_Id = cocktail.Cocktail_Id,
-				Cocktail_Name = comment.Name,
-				Cocktail_Description = comment.Description,
-				Cocktail_Instructions = comment.Instructions,
+				Title = comment.Title,
+				Content = comment.Content,
+				Note = comment.Note,
 			};
 		}
 
-		//Convert EditForm data to Bll
-		public static Cocktail ToBLL(this CocktailEditForm form)
+		////Convert EditForm data to Bll
+		public static Comment ToBLL(this CommentEditForm form)
 		{
 			if (form == null) throw new ArgumentNullException(nameof(form));
-			return new Cocktail(
-				form.CocktailId,
-				form.Cocktail_Name,
-				form.Cocktail_Instructions,
-				form.Cocktail_Description
+			return new Comment(
+				Guid.Empty,
+				form.Title,
+				form.Content,
+				Guid.Empty,
+				DateTime.Now,
+				Guid.Empty,
+				form.Note
 			);
 		}
 
-		// Convert BLL data to Delete form data
-		public static CocktailDelete DeleteForm(this Cocktail cocktail)
+		//// Convert BLL data to Delete form data
+		public static CommentDelete ToDeleteForm(this Comment comment)
 		{
-			if (cocktail == null) throw new ArgumentNullException(nameof(cocktail));
-			return new CocktailDelete()
+			if (comment == null) throw new ArgumentNullException(nameof(comment));
+			return new CommentDelete()
 			{
-				Cocktail_Name = cocktail.Name,
-				Cocktail_Description = cocktail.Description,
+				Title = comment.Title,
+				Concern = comment.Concern,
+				Content = comment.Content,
 			};
 		}
 	}

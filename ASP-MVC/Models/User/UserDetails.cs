@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using ASP_MVC.Models.Cocktail;
+using ASP_MVC.Models.Comment;
 
 namespace ASP_MVC.Models.User
 {
@@ -25,5 +26,8 @@ namespace ASP_MVC.Models.User
 
 		[DisplayName("Shared cocktails: ")]
 		public IEnumerable<CocktailListItem> Cocktails { get; set; } // We already created a, short model for cocktails so we can reuse it
+
+		[DisplayName("My comments: ")]
+		public IEnumerable<CommentListItem> Comments { get; set; }
 	}
 }
