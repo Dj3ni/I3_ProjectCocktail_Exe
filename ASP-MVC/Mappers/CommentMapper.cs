@@ -15,7 +15,8 @@ namespace ASP_MVC.Mappers
 				//Comment_Id = comment.Comment_Id,
 				Title = comment.Title,
 				Content = comment.Content,
-				CreatedBy = comment.CreatedBy,
+				Creator = (comment.Creator is null) ? null : $"{comment.Creator.First_Name} {comment.Creator.Last_Name}",
+				//CreatedBy = comment.CreatedBy,
 				Note = comment.Note,
 			};
 		}
@@ -29,7 +30,8 @@ namespace ASP_MVC.Mappers
 			{
 				Title = comment.Title,
 				Content = comment.Content,
-				CreatedBy = comment.CreatedBy,
+				CreatedBy = (comment.CreatedBy is null)? null: comment.CreatedBy,
+				Creator = (comment.Creator is null) ? "Ghost" : $"{comment.Creator.First_Name} {comment.Creator.Last_Name}",
 				CreatedAt = comment.CreatedAt,
 				Note = comment.Note,
 			};

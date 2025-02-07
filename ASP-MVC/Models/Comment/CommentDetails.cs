@@ -22,6 +22,9 @@ namespace ASP_MVC.Models.Comment
 		public DateTime CreatedAt { get; set; }
 
 		[DisplayName("From: ")]
+		public string? Creator { get; set; }
+
+		[ScaffoldColumn(false)]
 		public Guid? CreatedBy { get; set; }
 
 		[DisplayName("Cocktail note: ")]

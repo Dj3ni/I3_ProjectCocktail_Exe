@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Comment = BLL.Entities.Comment;
 
 namespace BLL.Services
@@ -32,7 +33,12 @@ namespace BLL.Services
 		// 2. Interface methods
 		public IEnumerable<Comment> GetByCocktailId(Guid cocktailId)
 		{
-			return _commentService.GetByCocktailId(cocktailId).Select(dal => dal.ToBLL());
+			IEnumerable<Comment> comments = _commentService.GetByCocktailId(cocktailId).Select(dal => dal.ToBLL());
+			foreach (Comment comment in comments)
+			{
+				if (comment.CreatedBy is not null) comment.Creator = _userService.GetById((Guid)comment.CreatedBy).ToBLL();
+			}
+			return comments;
 		}
 
 		public IEnumerable<Comment> GetByUserId(Guid userId)

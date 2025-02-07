@@ -1,21 +1,24 @@
 ﻿@model ASP_MVC.Models.Cocktail.CocktailDetails
 
-@* @{ *@
-@*     ViewData["Title"] = "Details"; *@
-@* } *@
 
-<h1>Details</h1>
-
+@{
+	ViewData["Title"] = "Details";
+	
+ }
+ <h1>@Model.Cocktail_Name</h1>
 <div>
-    <h4>CocktailDetails</h4>
+	<div>
+		@Html.ActionLink("Edit", "Edit", new { id = Model.Cocktail_Id }) |
+		<a asp-action="Index">Back to List</a>
+	</div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cocktail_Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cocktail_Name)
-        </dd>
+        @* <dt class = "col-sm-2"> *@
+        @*     @Html.DisplayNameFor(model => model.Cocktail_Name) *@
+        @* </dt> *@
+        @* <dd class = "col-sm-10"> *@
+        @*     @Html.DisplayFor(model => model.Cocktail_Name) *@
+        @* </dd> *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Cocktail_Description)
         </dt>
@@ -33,6 +36,7 @@
 		</dt>
 		<dd class="col-sm-10">
 			@Html.DisplayFor(model => model.Creator)
+			@* <a asp-action="Details" asp-controller="User" asp-route-id="@Model.CreatedBy">@Html.DisplayFor(model => model.Creator)</a> *@
 		</dd>
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.CreatedAt)
@@ -42,9 +46,5 @@
 		</dd>
     </dl>
 </div>
-<div>
-	@Html.ActionLink("Edit", "Edit", new { id = Model.Cocktail_Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
-
+<hr />
 <partial name ="_CommentListItem" model="Model.Comments"/>

@@ -18,7 +18,7 @@ namespace BLL.Entities
 		public short? Note { get; set; }
 
 		//Relations avec les autres entités
-		public User? User { get; set; }
+		public User? Creator { get; set; }
 		public Cocktail	Cocktail { get; set; }
 
 

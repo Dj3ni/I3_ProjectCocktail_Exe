@@ -22,8 +22,11 @@ namespace ASP_MVC.Models.Cocktail
 		[DisplayName("Created: ")]
 		public DateOnly CreatedAt {  get; set; }
 
-		[DisplayName("This recipe was shared by : ")]
+		[DisplayName("Shared by : ")]
 		public string? Creator { get; set; }
+
+		[ScaffoldColumn(false)]
+		public Guid? CreatedBy { get; set; }
 
 		[DisplayName("Comments: ")]
 		public IEnumerable<CommentListItem> Comments { get; set; }

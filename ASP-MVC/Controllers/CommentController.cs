@@ -72,7 +72,7 @@ namespace ASP_MVC.Controllers
 			{
 				if (!ModelState.IsValid) throw new ArgumentException(nameof(form));
 				Guid id = _commentService.Insert(form.ToBLL());
-				return RedirectToAction("Index","Home");
+				return RedirectToAction("Index","Cocktail");
 			}
 			catch
 			{
