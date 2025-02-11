@@ -49,7 +49,13 @@ namespace BLL.Services
 			//return _cocktailService.GetById(cocktailId).ToBLL(); //if no relations between cocktail and user
 			// here we want to get the user Id
 			Cocktail cocktail = _cocktailService.GetById(cocktailId).ToBLL();
-			if(cocktail.CreatedBy != null) cocktail.Creator = _userService.GetById((Guid)cocktail.CreatedBy).ToBLL();
+
+
+			if (cocktail.CreatedBy is not null)
+			{
+				cocktail.Creator = _userService.GetById((Guid)cocktail.CreatedBy).ToBLL();
+			}
+			
 
 			return cocktail;
 

@@ -104,7 +104,7 @@ namespace ASP_MVC.Controllers
 			try
 			{
 				Cocktail cocktail = _cocktailService.GetById(id);
-/* if we don't use the isCreator attribute, we would have to do this verification for each method we want to restrain acces to
+				/* if we don't use the isCreator attribute, we would have to do this verification for each method we want to restrain acces to
 				 * 
 				if(!(_sessionManager.ConnectedUser.UserId == cocktail.CreatedBy)) throw new InvalidOperationException("Vous n'êtes pas l'auteur de ce cocktail!");*/
 				CocktailEditForm model = cocktail.EditForm();

@@ -45,7 +45,7 @@
 						@Html.DisplayFor(modelItem => item.Content)
 					</td>
 					<td>
-						<a asp-action="Details" asp-controller="User" asp-route-id ="@item.CreatedBy">@Html.DisplayFor(modelItem => item.Creator)</a>
+						<a asp-action="Details" asp-controller="User" asp-route-id ="@item.CreatedBy">@Html.DisplayFor(modelItem => item.CreatedBy)</a>
 					</td>
 
 					@if(isConnected && isCreator){
@@ -64,7 +64,7 @@ else
 { 
 	<tr>
 		<td>
-			<p>No comments for this cocktail</p>
+			<p>No comments for now</p>
 		</td>
 	</tr>
 }

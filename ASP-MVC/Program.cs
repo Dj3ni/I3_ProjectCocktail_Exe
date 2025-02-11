@@ -18,12 +18,12 @@ namespace ASP_MVC
 			//builder.Services.AddDistributedMemoryCache();
 
 			// Pour la prod on va plutôt utiliser ceci:
-			builder.Services.AddDistributedSqlServerCache(
-				options =>{
-					options.ConnectionString = builder.Configuration.GetConnectionString("Session-DB");
-					options.SchemaName = "dbo";
-					options.TableName = "Session";
-				});
+			//builder.Services.AddDistributedSqlServerCache(
+			//	options =>{
+			//		options.ConnectionString = builder.Configuration.GetConnectionString("Session-DB");
+			//		options.SchemaName = "dbo";
+			//		options.TableName = "Session";
+			//	});
 
 			builder.Services.AddSession(
 				options =>

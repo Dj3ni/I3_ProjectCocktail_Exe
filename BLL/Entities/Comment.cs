@@ -33,10 +33,5 @@ namespace BLL.Entities
 			Note = note;
 		}
 
-		//public Comment(string title, Guid concern)
-		//{
-		//	Title = title;
-
-		//}
 	}
 }

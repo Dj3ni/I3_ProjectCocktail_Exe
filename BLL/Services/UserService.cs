@@ -47,14 +47,15 @@ namespace BLL.Services
 		{
 			//return _userService.GetById(id).ToBLL();//we don't need select because we are not in a collection
 			User user = _userService.GetById(id).ToBLL(); // We get the user
-			user.Cocktails = _cocktailService.GetByUser(id).Select(dal =>dal.ToBLL()); // We get all the cocktails associated with himtry{
+			user.Cocktails = _cocktailService.GetByUser(id).Select(dal => dal.ToBLL()); // We get all the cocktails associated with him
+
 			try
 			{
-				user.Comments = _commentService.GetByUserId(id).Select(dal => dal.ToBLL());
+				user.Comments = _commentService.GetByUserId(id).Select(dal => dal.ToBLL()); // We get all the comments he did if there is
 			}
 			catch
 			{
-				user.Comments = null;
+				user.Comments = null; // otherwise we send ther are none
 			}
 
 			return user;
