@@ -36,7 +36,7 @@ namespace BLL.Services
 			IEnumerable<Comment> comments = _commentService.GetByCocktailId(cocktailId).Select(dal => dal.ToBLL());
 			foreach (Comment comment in comments)
 			{
-				if (comment.CreatedBy is not null) comment.Creator = _userService.GetById((Guid)comment.CreatedBy).ToBLL();
+				if (comment.CreatedBy is not null) comment.SetCreator(_userService.GetById((Guid)comment.CreatedBy).ToBLL());
 			}
 			return comments;
 		}

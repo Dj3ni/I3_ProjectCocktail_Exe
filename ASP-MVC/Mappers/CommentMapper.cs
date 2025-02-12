@@ -21,6 +21,22 @@ namespace ASP_MVC.Mappers
 			};
 		}
 
+		public static CommentListMin ToListMin(this Comment comment)
+		{
+			if (comment == null) throw new ArgumentNullException(nameof(comment));
+
+			return new CommentListMin()
+			{
+				//Comment_Id = comment.Comment_Id,
+				Title = comment.Title,
+				Concern = comment.Concern,
+				CocktailConcerned = comment.Cocktail.Name,
+				Content = comment.Content,
+				CreatedBy = comment.CreatedBy,
+				Note = comment.Note,
+			};
+		}
+
 		// BLL to Details
 		public static CommentDetails ToDetails(this Comment comment)
 		{

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ASP_MVC.Models.Comment.CommentListMin>
+@{
+	bool isConnected = sessionManager.ConnectedUser is not null;
+	bool isCreator = false;
+	if (isConnected && Model.Any(model => model.CreatedBy == sessionManager.ConnectedUser.UserId))
+	{
+		isCreator = true;
+	}
+
+}
+
+
+<h4>Comments</h4>
+
+	<a asp-action="Create" asp-controller="Comment">Add a new Comment</a>
+
+
+@if (Model is not null || Model.Count() > 0)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+						@Html.DisplayNameFor(model => model.Note)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Concern)
+				</th>
+				<th>
+						@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+						@Html.DisplayNameFor(model => model.Content)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+							@Html.DisplayFor(modelItem => item.Note) / 5
+					</td>
+					<td>
+						<a asp-action="Details" asp-controller="Cocktail" asp-route-id="@item.Concern">@Html.DisplayFor(modelItem => item.CocktailConcerned)</a>
+					</td>
+					<td>
+							@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+							@Html.DisplayFor(modelItem => item.Content)
+					</td>
+		
+						@if (isConnected && isCreator)
+						{
+					<td>
+						<span>@Html.ActionLink("Edit", "Edit", new { id = item.Comment_Id }) |</span>
+								@Html.ActionLink("Delete", "Delete", new { id = item.Comment_Id })
+					</td>
+						}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<tr>
+		<td>
+			<p>No comments for now</p>
+		</td>
+	</tr>
+}
+
+

@@ -31,14 +31,14 @@
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.CreatedAt)
 		</dt>
-		
-		<h4>@Html.DisplayNameFor(Model =>Model.Cocktails)</h4>
-		@* @Html.Partial("_CocktailsList", Model.Cocktails) *@
-		<partial name="_CocktailsList" model = "Model.Cocktails"/>
-		<partial name="_CommentListItem" model="Model.Comments"/>
+		<div>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.User_Id }) |
+			<a asp-action="Index">Back to List</a>
+		</div>
     </dl>
+	<h4>@Html.DisplayNameFor(Model => Model.Cocktails)</h4>
+	@* @Html.Partial("_CocktailsList", Model.Cocktails) *@
+	<partial name="_CocktailsList" model="Model.Cocktails" />
+	<partial name="_CommentListMin" model="Model.Comments" />
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.User_Id}) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

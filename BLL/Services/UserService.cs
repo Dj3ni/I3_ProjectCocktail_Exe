@@ -29,10 +29,12 @@ namespace BLL.Services
 		private ICommentRepository<DAL.Entities.Comment> _commentService;
 		public UserService(
 				IUserRepository<DAL.Entities.User> userService,
-				ICocktailRepository<DAL.Entities.Cocktail> cocktailService)
+				ICocktailRepository<DAL.Entities.Cocktail> cocktailService,
+				ICommentRepository<DAL.Entities.Comment> commentRepository)
 		   {
 				_userService = userService;
 				_cocktailService = cocktailService;
+				_commentService = commentRepository;
 		   }
 
 		// 1. Crud
@@ -48,15 +50,22 @@ namespace BLL.Services
 			//return _userService.GetById(id).ToBLL();//we don't need select because we are not in a collection
 			User user = _userService.GetById(id).ToBLL(); // We get the user
 			user.Cocktails = _cocktailService.GetByUser(id).Select(dal => dal.ToBLL()); // We get all the cocktails associated with him
-
+			
 			try
 			{
-				user.Comments = _commentService.GetByUserId(id).Select(dal => dal.ToBLL()); // We get all the comments he did if there is
+				List<Comment> comments = _commentService.GetByUserId(id).Select(dal => dal.ToBLL()).ToList(); // We get all the comments he did if there are
+				foreach (Comment comment in comments)
+				{					
+					comment.Cocktail = _cocktailService.GetById(comment.Concern).ToBLL();
+				}
+				user.Comments = comments;
 			}
 			catch
 			{
-				user.Comments = null; // otherwise we send ther are none
+				user.Comments = null; // otherwise we send there are none
 			}
+
+			
 
 			return user;
 

@@ -26,7 +26,7 @@ namespace ASP_MVC.Mappers
 				Email = user.Email,
 				CreatedAt = DateOnly.FromDateTime(user.CreatedAt),
 				Cocktails = user.Cocktails.Select(bll=>bll.ToListItem()),
-				//Comments = user.Comments.Select(bll=>bll.ToListItem())
+				Comments = user.Comments.Select(bll=>bll.ToListMin()),
 			};
 		}
 

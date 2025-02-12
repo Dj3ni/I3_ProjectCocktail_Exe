@@ -61,5 +61,7 @@ namespace BLL.Entities
 			Email = email;
 		}
 
+
+
 	}
 }

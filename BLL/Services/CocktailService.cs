@@ -1,13 +1,12 @@
 ﻿using BLL.Entities;
 using BLL.Mappers;
 using Common.Repositories;
-using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cocktail = BLL.Entities.Cocktail;
+using BLL.Entities;
 
 namespace BLL.Services
 {
@@ -16,13 +15,16 @@ namespace BLL.Services
 		//Constructeur ( pour réutiliser un service si déjà créé)
 		private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
 		private IUserRepository<DAL.Entities.User> _userService;
+		private ICommentRepository<DAL.Entities.Comment> _commentService;
 		public CocktailService(
 			ICocktailRepository<DAL.Entities.Cocktail> cocktailService,
-			IUserRepository<DAL.Entities.User> userRepository)
+			IUserRepository<DAL.Entities.User> userRepository,
+			ICommentRepository<DAL.Entities.Comment> commentService)
 		{
 			//We use both because relation between them
 			_cocktailService = cocktailService;
 			_userService = userRepository;
+			_commentService = commentService;
 		}
 
 		// Méthodes CRUD
@@ -55,7 +57,11 @@ namespace BLL.Services
 			{
 				cocktail.Creator = _userService.GetById((Guid)cocktail.CreatedBy).ToBLL();
 			}
-			
+			cocktail.SetComments(_commentService.GetByCocktailId(cocktailId).Select(dal => dal.ToBLL()));
+			foreach (Comment comment in cocktail.Comments)
+			{
+				if (comment.CreatedBy is not null) comment.SetCreator(_userService.GetById((Guid)comment.CreatedBy).ToBLL());
+			}
 
 			return cocktail;
 

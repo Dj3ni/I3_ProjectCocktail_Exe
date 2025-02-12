@@ -56,7 +56,6 @@ namespace ASP_MVC.Controllers
 				// On envoie le modèle de vue!
 				CocktailDetails model = _cocktailService.GetById(id).ToDetails();
 				_sessionManager.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
-				model.Comments = _commentService.GetByCocktailId(id).Select(bll => bll.ToListItem());
 				//_cocktailQueueCorrection.AddVisitedCocktail(model.Cocktail_Id, model.Cocktail_Name);
 
 				//_sessionManager.AddToVisited(model.Cocktail_Id);

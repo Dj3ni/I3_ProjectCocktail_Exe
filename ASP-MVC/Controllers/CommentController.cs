@@ -58,6 +58,7 @@ namespace ASP_MVC.Controllers
 		//}
 
 		// GET: CommentController/Create
+		[ConnectionNeeded]
 		public ActionResult Create()
 		{
 			return View();
@@ -66,6 +67,7 @@ namespace ASP_MVC.Controllers
 		// POST: CommentController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Create(CommentCreateForm form)
 		{
 			try
@@ -80,6 +82,7 @@ namespace ASP_MVC.Controllers
 			}
 		}
 
+		[ConnectionNeeded]
 		// GET: CommentController/Edit/5
 		public ActionResult Edit(Guid id)
 		{
@@ -99,6 +102,7 @@ namespace ASP_MVC.Controllers
 		// POST: CommentController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Edit(Guid id, CommentEditForm form)
 		{
 			try
@@ -115,6 +119,7 @@ namespace ASP_MVC.Controllers
 		}
 
 		// GET: CommentController/Delete/5
+		[ConnectionNeeded]
 		public ActionResult Delete(Guid id)
 		{
 			try
@@ -133,6 +138,7 @@ namespace ASP_MVC.Controllers
 		// POST: CommentController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[ConnectionNeeded]
 		public ActionResult Delete(Guid id, CommentDelete form)
 		{
 			try

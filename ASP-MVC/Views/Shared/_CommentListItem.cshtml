@@ -1,15 +1,33 @@
 ﻿@model IEnumerable<ASP_MVC.Models.Comment.CommentListItem>
 @{
 	bool isConnected = sessionManager.ConnectedUser is not null;
-	bool isCreator= true;
+	bool isCreator = false;
+	if (isConnected && Model.Any(model => model.CreatedBy == sessionManager.ConnectedUser.UserId))
+	{
+		isCreator = true;
+	}
+	double averageNote = 0;
 }
 
 
 <h4>Comments</h4>
-@*Afficher note moyenne*@
 
-@if (Model is not null)
+@if (Model is not null && Model.Count() > 0)
 {
+	int i = 0;
+	foreach(int note in Model.Select(model=>model.Note).ToList()){ // C'est un IEnumerable du coup on doit le transformer en liste!pour le parcourir
+
+		averageNote += note;
+		i++;
+	}
+	averageNote = averageNote / i;
+	<p>Average note : @averageNote / 5 </p>
+
+	@if (isCreator == false)
+	{
+		<a asp-action="Create" asp-controller="Comment">Add a new Comment</a>
+	}
+
 	<table class="table">
 		<tbody>
 		
@@ -45,7 +63,7 @@
 						@Html.DisplayFor(modelItem => item.Content)
 					</td>
 					<td>
-						<a asp-action="Details" asp-controller="User" asp-route-id ="@item.CreatedBy">@Html.DisplayFor(modelItem => item.CreatedBy)</a>
+						<a asp-action="Details" asp-controller="User" asp-route-id ="@item.CreatedBy">@Html.DisplayFor(modelItem => item.Creator)</a>
 					</td>
 
 					@if(isConnected && isCreator){

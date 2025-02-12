@@ -18,7 +18,7 @@ namespace BLL.Entities
 		public short? Note { get; set; }
 
 		//Relations avec les autres entités
-		public User? Creator { get; set; }
+		public User? Creator { get; private set; }
 		public Cocktail	Cocktail { get; set; }
 
 
@@ -33,5 +33,11 @@ namespace BLL.Entities
 			Note = note;
 		}
 
+		public void SetCreator(User creator)
+		{
+			if (creator is null) throw new ArgumentNullException(nameof(creator));
+			if (CreatedBy is null || CreatedBy != creator.User_Id) throw new InvalidOperationException();
+			Creator = creator;
+		}
 	}
 }

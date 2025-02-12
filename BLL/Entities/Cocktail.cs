@@ -44,5 +44,10 @@ namespace BLL.Entities
 			Comments.Add(comment);
 		}
 
+		public void SetComments(IEnumerable<Comment> comments)
+		{
+			Comments = new List<Comment>(comments);
+		}
+
 	}
 }
