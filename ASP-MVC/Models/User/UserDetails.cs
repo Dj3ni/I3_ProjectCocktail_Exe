@@ -21,12 +21,13 @@ namespace ASP_MVC.Models.User
 
 
 		[DisplayName("Subscription date: ")]
+		[DataType(DataType.Date)]
 		public DateOnly CreatedAt { get; set; }
 
-		[DisplayName("Shared cocktails: ")]
+		[DisplayName("Shared cocktails")]
 		public IEnumerable<CocktailListItem> Cocktails { get; set; } // We already created a, short model for cocktails so we can reuse it
 
-		[DisplayName("My comments: ")]
+		[DisplayName("My comments")]
 		public IEnumerable<CommentListMin> Comments { get; set; }
 	}
 }

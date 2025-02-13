@@ -18,6 +18,7 @@ namespace BLL.Entities
 		public DateTime CreatedAt { get; set; }
 
 		private DateTime? _disabledAt;
+
 		//public DateTime? DisabledAt { get { return _disabledAt; }}
 
 		public UserRole Role { get; set; }

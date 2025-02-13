@@ -27,7 +27,13 @@ namespace ASP_MVC.Handlers.ActionFilters
 
 			ICocktailRepository<Cocktail> cocktailRepository = GetCocktailService(context.HttpContext);
 			Cocktail cocktail = cocktailRepository.GetById(cocktailId);
-			if(cocktail.CreatedBy != user.UserId)
+
+			//On récupère l'Id du commentaire via la route
+			Guid commentId = Guid.Parse(context.RouteData.Values["id"].ToString());
+			ICommentRepository<Comment> commentRepository =GetCommentService(context.HttpContext);
+			//Comment comment = commentRepository.GetById(commentId);|| comment.CreatedBy != user.UserId
+
+			if (cocktail.CreatedBy != user.UserId )
 			{
 				context.Result = new RedirectToActionResult("Details","Cocktail",new {id = cocktailId});
 			}
@@ -45,6 +51,11 @@ namespace ASP_MVC.Handlers.ActionFilters
 			 return serviceProvider.GetService<ICocktailRepository<Cocktail>>();
 		}
 
+		private ICommentRepository<Comment> GetCommentService(HttpContext httpContext)
+		{
+			IServiceProvider serviceProvider = httpContext.RequestServices;
+			return serviceProvider.GetService<ICommentRepository<Comment>>();
+		}
 
 	}
 }

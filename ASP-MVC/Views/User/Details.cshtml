@@ -8,6 +8,10 @@
 
 <div>
     <h4>@Model.First_Name @Model.Last_Name</h4>
+	<div>
+		@Html.ActionLink("Edit", "Edit", new { id = Model.User_Id }) |
+		<a asp-action="Index">Back to List</a>
+	</div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -31,14 +35,16 @@
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.CreatedAt)
 		</dt>
-		<div>
-			@Html.ActionLink("Edit", "Edit", new { id = Model.User_Id }) |
-			<a asp-action="Index">Back to List</a>
-		</div>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CreatedAt)
+		</dd>
     </dl>
+	<hr />
 	<h4>@Html.DisplayNameFor(Model => Model.Cocktails)</h4>
 	@* @Html.Partial("_CocktailsList", Model.Cocktails) *@
 	<partial name="_CocktailsList" model="Model.Cocktails" />
+
+	<h4>@Html.DisplayNameFor(Model => Model.Comments)</h4>
 	<partial name="_CommentListMin" model="Model.Comments" />
 </div>
 
